@@ -51,6 +51,13 @@ set (CMAKE_C_STANDARD 11)
 
 ########################################
 ###
+### OS Module: musl-libc
+# Build the musl libc
+########################################
+add_subdirectory(src/sdk/musl)
+
+########################################
+###
 ### OS Module: Kernel
 # The operating system kernel
 # 1. Sets compiler and linker configuration
