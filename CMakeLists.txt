@@ -51,6 +51,18 @@ set (CMAKE_C_STANDARD 11)
 
 ########################################
 ###
+### OS Module: Kernel
+# The operating system kernel
+# 1. Sets compiler and linker configuration
+# 2. Locate and build sources of the kernel
+# 3. Link boot object with the kernel
+# 4. copy compiled binary to the root of the cmake build directory.
+########################################
+add_subdirectory(src/kernel)
+
+
+########################################
+###
 ### OS Module: Boot
 # The boot module takes care of booting the operating system
 # it is written in assembler language and does the following
