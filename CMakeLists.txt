@@ -67,6 +67,12 @@ add_subdirectory(src/sdk/musl)
 ########################################
 add_subdirectory(src/kernel)
 
+########################################
+###
+### OS Module: CPU
+# All CPU specific operations are performed in this module. IRQ, ISR, GDT, IDT and other hardware glue components.
+########################################
+add_subdirectory(src/cpu/${ARCH_TARGET})
 
 ########################################
 ###
