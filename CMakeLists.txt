@@ -61,3 +61,11 @@ set (CMAKE_C_STANDARD 11)
 # 5. defines the start routine which finally starts our kernel
 ########################################
 add_subdirectory(src/boot)
+
+########################################
+###
+### Grub
+# Configure a bootable image of our operating system
+########################################
+add_subdirectory(src/grub)
+
