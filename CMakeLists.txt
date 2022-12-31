@@ -58,6 +58,13 @@ add_subdirectory(src/sdk/musl)
 
 ########################################
 ###
+### OS Module: lua
+# Build the lua runtime
+########################################
+add_subdirectory(src/sdk/lua)
+
+########################################
+###
 ### OS Module: Kernel
 # The operating system kernel
 # 1. Sets compiler and linker configuration
