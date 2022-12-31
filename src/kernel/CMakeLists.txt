@@ -1,5 +1,13 @@
 ########################################
 ###
+### OS Module: stdlib
+#  The UiA Standard C Library
+#  Contains functions to build the OS.
+########################################
+add_subdirectory(src/modules/stdlib)
+
+########################################
+###
 ### Set configuration for Kernel Module
 ###
 ########################################
