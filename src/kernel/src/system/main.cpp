@@ -2,15 +2,44 @@
 // Created by per on 12/30/22.
 //
 #include "uiastdlib.h"
+#include "display.h"
 
+class OperatingSystem{
+    UiAOS::IO::VGA display;
+
+
+public:
+    OperatingSystem(vga_color color)
+            : display(color){
+
+    }
+
+    void init(){
+        display.print_string("Initializing UiA Operating System....");
+        display.print_new_line();
+    }
+
+    void debug_print(char* str){
+        display.print_string(str);
+        display.print_new_line();
+    }
+
+};
 
 
 extern "C" void kernel_main()
 {
-    // Now we can use itoa!
-    char str_num[1];
-    itoa(9, str_num);
+    // Create operating system object
+    auto os = OperatingSystem(RED);
+    os.init();
 
-    char* video_memory = (char*) 0xb8000;
-    *video_memory = str_num[0]; // Should print 9
+    // Do some printing!
+    os.debug_print("Hello World!");
+
+    // Do some non-standard itoa
+    char str_num[4];
+    itoa(1337, str_num);
+
+    // Print that number.
+    os.debug_print(str_num);
 }

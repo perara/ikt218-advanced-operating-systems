@@ -6,6 +6,15 @@
 ########################################
 add_subdirectory(src/modules/stdlib)
 
+
+########################################
+###
+### OS Module: Display
+# Module for supporting printing to the display/terminal
+########################################
+add_subdirectory(src/modules/io/display)
+
+
 ########################################
 ###
 ### Set configuration for Kernel Module
