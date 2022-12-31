@@ -17,6 +17,7 @@ set(OS_MODULE_CPU_SOURCES
         isr.s
 
         hardware.cpp
+        hardware_port.cpp
 )
 
 add_library(${OS_MODULE_CPU_NAME} ${OS_MODULE_CPU_SOURCES})
