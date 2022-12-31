@@ -40,6 +40,10 @@ extern "C" void kernel_main()
     char str_num[4];
     itoa(1337, str_num);
 
+    asm volatile ("int $0x3");
+    // Should not print the number!
+
+
     // Print that number.
     os.debug_print(str_num);
 }
