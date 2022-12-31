@@ -48,3 +48,16 @@ set (CXX_COMPILER_FLAGS ${COMMON_COMPILER_FLAGS} -fno-exceptions -fno-rtti -fcon
 
 set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_C_STANDARD 11)
+
+########################################
+###
+### OS Module: Boot
+# The boot module takes care of booting the operating system
+# it is written in assembler language and does the following
+# 1. define the multiboot header variables
+# 2. define the multiboot header section.
+# 3. defines the .bss section. https://en.wikipedia.org/wiki/.bss
+# 4. defines the .text section (code segment) https://en.wikipedia.org/wiki/Code_segment
+# 5. defines the start routine which finally starts our kernel
+########################################
+add_subdirectory(src/boot)
