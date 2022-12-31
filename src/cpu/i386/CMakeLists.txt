@@ -9,6 +9,8 @@ set(OS_MODULE_CPU_COMPILE_OPTS -m32 -elf -dbg)
 set(OS_MODULE_CPU_SOURCES
         gdt.s
         gdt.c
+        idt.s
+        idt.s
 )
 
 add_library(${OS_MODULE_CPU_NAME} ${OS_MODULE_CPU_SOURCES})
