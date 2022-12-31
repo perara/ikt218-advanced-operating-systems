@@ -1,28 +1,19 @@
 ########################################
 ###
-### OS Module: stdlib
-#  The UiA Standard C Library
-#  Contains functions to build the OS.
-########################################
-add_subdirectory(src/modules/stdlib)
-
-
-########################################
-###
-### OS Module: Display
-# Module for supporting printing to the display/terminal
-########################################
-add_subdirectory(src/modules/io/display)
-
-
-########################################
-###
 ### Set configuration for Kernel Module
 ###
 ########################################
 set(OS_MODULE_KERNEL_NAME ${OS_KERNEL_NAME}-kernel)
 set(OS_MODULE_KERNEL_COMPILE_FLAGS )
 file(GLOB_RECURSE OS_MODULE_KERNEL_SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} src/system/*.cpp)
+
+
+########################################
+###
+### Import all OS Modules
+###
+########################################
+add_subdirectory(src/modules)
 
 ########################################
 ###
