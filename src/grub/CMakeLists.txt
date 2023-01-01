@@ -39,7 +39,7 @@ file (MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/iso/boot/grub)
 configure_file(${CMAKE_SOURCE_DIR}/src/grub/grub.cfg.in ${CMAKE_BINARY_DIR}/iso/boot/grub/grub.cfg)
 
 add_custom_target(${GRUB_TARGET}
-        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${OS_KERNEL_NAME}-boot> ${CMAKE_BINARY_DIR}/iso/boot/
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${OS_KERNEL_NAME}-kernel> ${CMAKE_BINARY_DIR}/iso/boot/
         COMMAND ${GRUB_MKRESCUE} --output=${GRUB_IMAGE_PATH} ${CMAKE_BINARY_DIR}/iso
 )
 

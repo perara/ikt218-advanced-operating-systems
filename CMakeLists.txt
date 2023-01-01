@@ -4,7 +4,7 @@
 ### We will be using C, C++ and Assembler
 ########################################
 cmake_minimum_required(VERSION 3.24)
-project(UiAOS LANGUAGES C CXX ASM)
+project(UiAOS LANGUAGES C CXX ASM_NASM)
 
 ########################################
 ###
@@ -43,11 +43,25 @@ endif()
 ########################################
 set (WARNING_FLAGS -Wall -Wextra -Wshadow -Wconversion -Wsign-conversion -Wno-error=unknown-warning)
 set (COMMON_COMPILER_FLAGS -ffreestanding -fstack-protector-all ${WARNING_FLAGS})
-set (C_COMPILER_FLAGS ${COMMON_COMPILER_FLAGS})
+set (C_COMPILER_FLAGS ${COMMON_COMPILER_FLAGS} -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin)
 set (CXX_COMPILER_FLAGS ${COMMON_COMPILER_FLAGS} -fno-exceptions -fno-rtti -fconcepts)
 
 set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_C_STANDARD 11)
+
+########################################
+###
+### Assembly configuration
+# We use the nasm compiler
+# And we must set the correct elf format
+########################################
+set(CMAKE_ASM_NASM_SOURCE_FILE_EXTENSIONS ${CMAKE_ASM_NASM_SOURCE_FILE_EXTENSIONS} s S)
+if(ARCH_TARGET STREQUAL i386)
+    set(CMAKE_ASM_NASM_OBJECT_FORMAT elf32)
+else()
+    message(FATAL_ERROR "Currently, we do not support other than elf32")
+endif()
+set(CMAKE_ASM_NASM_COMPILE_OBJECT "<CMAKE_ASM_NASM_COMPILER> <DEFINES> <INCLUDES> <FLAGS> -f ${CMAKE_ASM_NASM_OBJECT_FORMAT} -o <OBJECT> <SOURCE>")
 
 ########################################
 ###
@@ -65,10 +79,16 @@ add_subdirectory(src/sdk/lua)
 
 ########################################
 ###
-### OS Module: CPU
-# All CPU specific operations are performed in this module. IRQ, ISR, GDT, IDT and other hardware glue components.
+### OS Module: Boot
+# The boot module takes care of booting the operating system
+# it is written in assembler language and does the following
+# 1. define the multiboot header variables
+# 2. define the multiboot header section.
+# 3. defines the .bss section. https://en.wikipedia.org/wiki/.bss
+# 4. defines the .text section (code segment) https://en.wikipedia.org/wiki/Code_segment
+# 5. defines the start routine which finally starts our kernel
 ########################################
-add_subdirectory(src/cpu/${ARCH_TARGET})
+add_subdirectory(src/boot)
 
 ########################################
 ###
@@ -80,18 +100,6 @@ add_subdirectory(src/cpu/${ARCH_TARGET})
 # 4. copy compiled binary to the root of the cmake build directory.
 ########################################
 add_subdirectory(src/kernel)
-########################################
-###
-### OS Module: Boot
-# The boot module takes care of booting the operating system
-# it is written in assembler language and does the following
-# 1. define the multiboot header variables
-# 2. define the multiboot header section.
-# 3. defines the .bss section. https://en.wikipedia.org/wiki/.bss
-# 4. defines the .text section (code segment) https://en.wikipedia.org/wiki/Code_segment
-# 5. defines the start routine which finally starts our kernel
-########################################
-add_subdirectory(src/boot)
 
 ########################################
 ###

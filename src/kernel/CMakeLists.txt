@@ -5,7 +5,32 @@
 ########################################
 set(OS_MODULE_KERNEL_NAME ${OS_KERNEL_NAME}-kernel)
 set(OS_MODULE_KERNEL_COMPILE_FLAGS )
-file(GLOB_RECURSE OS_MODULE_KERNEL_SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} src/system/*.cpp)
+file(GLOB_RECURSE OS_MODULE_KERNEL_SOURCES
+        RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+        #src/system/*.cpp
+        main.cpp
+        #src/system/*.c
+)
+set(OS_MODULE_KERNEL_BINARY ${OS_KERNEL_NAME}.bin)
+set(OS_MODULE_KERNEL_LINKER ${CMAKE_SOURCE_DIR}/src/arch/${ARCH_TARGET}/linker.ld)
+set(OS_MODULE_KERNEL_LINK_FLAGS "-T ${OS_MODULE_KERNEL_LINKER} -ffreestanding -nostdlib -lgcc") # 02
+#set(OS_MODULE_KERNEL_COMPILE_OPTS -m32)
+
+########################################
+###
+### OS Module: stdlib
+#  The UiA Standard C Library
+#  Contains functions to build the OS.
+###
+########################################
+add_subdirectory(stdlib)
+
+########################################
+###
+### OS Module: CPU
+# All CPU specific operations are performed in this module. IRQ, ISR, GDT, IDT and other hardware glue components.
+########################################
+add_subdirectory(cpu)
 
 
 ########################################
@@ -13,17 +38,18 @@ file(GLOB_RECURSE OS_MODULE_KERNEL_SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} 
 ### Import all OS Modules
 ###
 ########################################
-add_subdirectory(src/modules)
+add_subdirectory(drivers)
 
 ########################################
 ###
 ### Add executable for the kernel
 ###
 ########################################
-add_library(${OS_MODULE_KERNEL_NAME} ${OS_MODULE_KERNEL_SOURCES})
+add_executable(${OS_MODULE_KERNEL_NAME} ${OS_MODULE_KERNEL_SOURCES})
 target_include_directories(
         ${OS_MODULE_KERNEL_NAME} PUBLIC
         include
+        drivers/_include
 )
 
 ########################################
@@ -36,6 +62,16 @@ target_link_libraries(
         ${OS_MODULE_KERNEL_NAME} PUBLIC
         ${OS_LIBRARIES}
         ${OS_APPLICATIONS}
+)
+########################################
+###
+### Set name and linker flags for the kernel
+###
+########################################
+set_target_properties(
+        ${OS_MODULE_KERNEL_NAME} PROPERTIES
+        OUTPUT_NAME ${OS_MODULE_KERNEL_BINARY}
+        LINK_FLAGS ${OS_MODULE_KERNEL_LINK_FLAGS}
 )
 
 ########################################
