@@ -6,5 +6,6 @@
 #define UIAOS_DRIVER_H
 
 #include "../monitor/monitor.h"
+#include "../keyboard/keyboard.h"
 
 #endif //UIAOS_DRIVER_H

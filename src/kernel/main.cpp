@@ -93,6 +93,18 @@ extern "C" void kernel_main()
     }, &os);
 
 
+    // Hook Keyboard
+    UiAOS::IO::Keyboard::hook_keyboard([](uint8_t scancode, void* context){
+        auto* os = (OperatingSystem*)context;
+        UiAOS::IO::Monitor::print_string("Keyboard Event: ");
+        UiAOS::IO::Monitor::print_char(UiAOS::IO::Keyboard::scancode_to_ascii(scancode));
+        UiAOS::IO::Monitor::print_string(" (");
+        UiAOS::IO::Monitor::print_int(scancode);
+        UiAOS::IO::Monitor::print_string(")");
+        UiAOS::IO::Monitor::print_new_line();
+    }, &os);
+
+    while(1){}
 
 }
 
