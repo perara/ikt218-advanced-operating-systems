@@ -65,6 +65,13 @@ add_subdirectory(src/sdk/lua)
 
 ########################################
 ###
+### OS Module: CPU
+# All CPU specific operations are performed in this module. IRQ, ISR, GDT, IDT and other hardware glue components.
+########################################
+add_subdirectory(src/cpu/${ARCH_TARGET})
+
+########################################
+###
 ### OS Module: Kernel
 # The operating system kernel
 # 1. Sets compiler and linker configuration
@@ -73,14 +80,6 @@ add_subdirectory(src/sdk/lua)
 # 4. copy compiled binary to the root of the cmake build directory.
 ########################################
 add_subdirectory(src/kernel)
-
-########################################
-###
-### OS Module: CPU
-# All CPU specific operations are performed in this module. IRQ, ISR, GDT, IDT and other hardware glue components.
-########################################
-add_subdirectory(src/cpu/${ARCH_TARGET})
-
 ########################################
 ###
 ### OS Module: Boot

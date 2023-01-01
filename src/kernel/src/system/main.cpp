@@ -8,9 +8,10 @@
 extern "C" {
     #include <stdio.h>
     #include <stdlib.h>
-    #include "lua.h"
-    #include "lualib.h"
-    #include "lauxlib.h"
+    #include <lua.h>
+    #include <lualib.h>
+    #include <lauxlib.h>
+    #include <hardware.h>
 }
 
 
@@ -33,6 +34,17 @@ public:
         display.print_string(str);
         display.print_new_line();
     }
+
+    void interrupt_handler_3(registers_t regs){
+        display.print_string("Called Interrupt Handler 3!");
+        display.print_new_line();
+    }
+
+    void interrupt_handler_4(registers_t regs){
+        display.print_string("Called Interrupt Handler 4!");
+        display.print_new_line();
+    }
+
 
     int lua_example(){
         // TODO - This will not work - Our kernel is far from strong enough!
@@ -82,7 +94,19 @@ extern "C" void kernel_main()
     // Create operating system object
     auto os = OperatingSystem(RED);
     os.init();
-    
+
+    register_interrupt_handler(3,[](registers_t regs, void* context){
+        auto* os = (OperatingSystem*)context;
+        os->interrupt_handler_3(regs);
+    }, (void*)&os);
+
+    register_interrupt_handler(4,[](registers_t regs, void* context){
+        auto* os = (OperatingSystem*)context;
+        os->interrupt_handler_4(regs);
+    }, (void*)&os);
+
+
+
     // Do some printing!
     os.debug_print("Hello World!");
 
@@ -92,7 +116,7 @@ extern "C" void kernel_main()
 
     asm volatile ("int $0x3");
     // Should not print the number!
-
+    asm volatile ("int $0x4");
 
     // Print that number.
     os.debug_print(str_num);

@@ -3,20 +3,23 @@
 /*interrupt.s -- Contains interrupt service routine wrappers. Based on Bran's kernel development tutorials. Rewritten for JamesM's kernel development tutorials. This macro creates a stub for an ISR which does NOT pass it's ownerror code (adds a dummy errcode byte). */
 
 
+/* This macro creates a stub for an ISR which does NOT pass it's own error code (adds a dummy errcode byte). */
 .macro ISR_NOERRCODE id
     .global isr\id
     isr\id :
-        cli
-        push \id
-        jmp isr_common_stub
+        cli /* Disable interrupts */
+        push 0 /* Dummy Error Code */
+        push \id /* Push the interrupt number */
+        jmp isr_common_stub /* Jump to the isr handler code */
 .endm
 
+/* This macro creates a stub for an ISR which passes it's own error code.*/
 .macro ISR_ERRCODE id
     .global isr\id
     isr\id :
-        cli
-        push \id
-        jmp isr_common_stub
+        cli /* Disable interrupts */
+        push \id /* Push the interrupt number */
+        jmp isr_common_stub /* Jump to the isr handler code */
 .endm
 
 ISR_NOERRCODE 0
