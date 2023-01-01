@@ -1,6 +1,10 @@
 .intel_syntax noprefix
 
-/*interrupt.s -- Contains interrupt service routine wrappers. Based on Bran's kernel development tutorials. Rewritten for JamesM's kernel development tutorials. This macro creates a stub for an ISR which does NOT pass it's ownerror code (adds a dummy errcode byte). */
+/*
+interrupt.s
+ -- Contains interrupt service routine wrappers.
+  Inspied by  JamesM's kernel development tutorials.
+*/
 
 
 /* This macro creates a stub for an ISR which does NOT pass it's own error code (adds a dummy errcode byte). */
@@ -21,6 +25,42 @@
         push \id /* Push the interrupt number */
         jmp isr_common_stub /* Jump to the isr handler code */
 .endm
+
+/*
+; Interrupt Exception Meanings:
+; 0: Divide By Zero Exception
+; 1: Debug Exception
+; 2: Non Maskable Interrupt Exception
+; 3: Int 3 Exception
+; 4: INTO Exception
+; 5: Out of Bounds Exception
+; 6: Invalid Opcode Exception
+; 7: Coprocessor Not Available Exception
+; 8: Double Fault Exception (With Error Code!)
+; 9: Coprocessor Segment Overrun Exception
+; 10: Bad TSS Exception (With Error Code!)
+; 11: Segment Not Present Exception (With Error Code!)
+; 12: Stack Fault Exception (With Error Code!)
+; 13: General Protection Fault Exception (With Error Code!)
+; 14: Page Fault Exception (With Error Code!)
+; 15: Reserved Exception
+; 16: Floating Point Exception
+; 17: Alignment Check Exception
+; 18: Machine Check Exception
+; 19: Reserved
+; 20: Reserved
+; 21: Reserved
+; 22: Reserved
+; 23: Reserved
+; 24: Reserved
+; 25: Reserved
+; 26: Reserved
+; 27: Reserved
+; 28: Reserved
+; 29: Reserved
+; 30: Reserved
+; 31: Reserved
+*/
 
 ISR_NOERRCODE 0
 ISR_NOERRCODE 1
