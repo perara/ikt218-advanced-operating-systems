@@ -16,6 +16,9 @@ set(OS_MODULE_CPU_SOURCES
         isr.c
         isr.s
 
+        irq.s
+        irq.c
+
         hardware.cpp
         hardware_port.cpp
 )
