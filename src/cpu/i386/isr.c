@@ -37,9 +37,6 @@ void init_isr(void(*idt_set_gate)(uint8_t,uint32_t,uint16_t,uint8_t)){
 
 }
 
-isr_t interrupt_handlers[256];
-void* interrupt_handlers_contexts[256];
-
 void register_interrupt_handler(uint8_t n, isr_t handler, void* context)
 {
     interrupt_handlers[n] = handler;

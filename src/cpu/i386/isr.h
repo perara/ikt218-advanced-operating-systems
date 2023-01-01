@@ -58,4 +58,7 @@ extern void isr31();
 typedef void (*isr_t)(registers_t, void* context);
 void register_interrupt_handler(uint8_t n, isr_t handler, void* context);
 
+static isr_t interrupt_handlers[256];
+static void* interrupt_handlers_contexts[256];
+
 #endif //UIAOS_ISR_H
