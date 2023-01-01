@@ -26,7 +26,9 @@ enum vga_color {
 
 #if defined(OS_MODULE_IO_DISPLAY_VERSION)
     #if (OS_MODULE_IO_DISPLAY_VERSION == 1)
-        #include "display_1.h"
+        #include "../display_1.h"
+    #elif (OS_MODULE_IO_DISPLAY_VERSION == 2)
+        #include "../display_2.h"
     #endif
 #else
     #include "../display_1.h"

@@ -16,33 +16,36 @@ extern "C" {
 
 
 class OperatingSystem{
-    UiAOS::IO::VGA display;
+
 
 
 public:
     OperatingSystem(vga_color color)
-            : display(color){
+    {
+        UiAOS::IO::init_vga(WHITE, RED);
+
 
     }
 
     void init(){
-        display.print_string("Initializing UiA Operating System....");
-        display.print_new_line();
+
+        UiAOS::IO::print_string("Initializing UiA Operating System....");
+        UiAOS::IO::print_new_line();
     }
 
     void debug_print(char* str){
-        display.print_string(str);
-        display.print_new_line();
+        UiAOS::IO::print_string(str);
+        UiAOS::IO::print_new_line();
     }
 
     void interrupt_handler_3(registers_t regs){
-        display.print_string("Called Interrupt Handler 3!");
-        display.print_new_line();
+        UiAOS::IO::print_string("Called Interrupt Handler 3!");
+        UiAOS::IO::print_new_line();
     }
 
     void interrupt_handler_4(registers_t regs){
-        display.print_string("Called Interrupt Handler 4!");
-        display.print_new_line();
+        UiAOS::IO::print_string("Called Interrupt Handler 4!");
+        UiAOS::IO::print_new_line();
     }
 
 

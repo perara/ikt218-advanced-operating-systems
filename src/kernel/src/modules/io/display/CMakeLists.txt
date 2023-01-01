@@ -1,5 +1,5 @@
 
-set(OS_MODULE_IO_DISPLAY_VERSION 1)
+set(OS_MODULE_IO_DISPLAY_VERSION "2")
 set(OS_MODULE_IO_DISPLAY_NAME ${OS_KERNEL_NAME}-module-display)
 set(OS_MODULE_IO_DISPLAY_SOURCES
         display_${OS_MODULE_IO_DISPLAY_VERSION}.cpp
@@ -13,7 +13,7 @@ target_include_directories(${OS_MODULE_IO_DISPLAY_NAME}
         PRIVATE .
 )
 target_compile_definitions(${OS_MODULE_IO_DISPLAY_NAME}
-        PRIVATE
+        PUBLIC
         OS_MODULE_IO_DISPLAY_VERSION=${OS_MODULE_IO_DISPLAY_VERSION}
 )
 
