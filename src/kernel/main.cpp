@@ -2,7 +2,7 @@
 // Created by per on 12/30/22.
 //
 
-#include "uiastdlib.h"
+#include <stdlib/c/libc.h>
 #include "driver.h"
 #include <cpu.h>
 

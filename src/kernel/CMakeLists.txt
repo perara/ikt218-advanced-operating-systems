@@ -18,7 +18,7 @@ set(OS_MODULE_KERNEL_LINK_FLAGS "-T ${OS_MODULE_KERNEL_LINKER} -ffreestanding -n
 
 ########################################
 ###
-### OS Module: stdlib
+### OS Module: lib
 #  The UiA Standard C Library
 #  Contains functions to build the OS.
 ###

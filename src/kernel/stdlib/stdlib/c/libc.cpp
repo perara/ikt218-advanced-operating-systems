@@ -1,4 +1,4 @@
-#include "uiastdlib.h"
+#include "libc.h"
 #include <string.h>
 
 /* reverse:  reverse string s in place */
