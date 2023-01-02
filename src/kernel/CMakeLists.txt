@@ -32,6 +32,14 @@ add_subdirectory(stdlib)
 ########################################
 add_subdirectory(cpu)
 
+########################################
+###
+### OS Module: Memory
+# All memory related components to the kernel is found here. Examples:
+# * Kernel Heap
+########################################
+add_subdirectory(memory)
+
 
 ########################################
 ###
