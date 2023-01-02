@@ -2,18 +2,18 @@
 
 set(OS_MODULE_CPU_NAME ${OS_KERNEL_NAME}-cpu)
 set(OS_MODULE_CPU_SOURCES
-        ${ARCH_TARGET}/gdt.c
+        ${ARCH_TARGET}/gdt.cpp
         ${ARCH_TARGET}/gdt_a.asm
 
-        ${ARCH_TARGET}/idt.c
+        ${ARCH_TARGET}/idt.cpp
         ${ARCH_TARGET}/idt_a.asm
 
-        ${ARCH_TARGET}/isr.c
+        ${ARCH_TARGET}/isr.cpp
         ${ARCH_TARGET}/isr_a.asm
 
         ${ARCH_TARGET}/hardware_port.cpp
         ${ARCH_TARGET}/hardware.cpp
-        ${ARCH_TARGET}/timer/timer.c
+        ${ARCH_TARGET}/timer/timer.cpp
 )
 
 add_library(${OS_MODULE_CPU_NAME} ${OS_MODULE_CPU_SOURCES})

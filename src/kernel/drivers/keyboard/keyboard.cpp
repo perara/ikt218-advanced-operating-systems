@@ -29,7 +29,7 @@ void UiAOS::IO::Keyboard::hook_keyboard(keyboard_callback a, void *b) {
 
     payload = {a, b};
 
-    isr_t static_cb = [](registers_t *regs, void* cb_ptr){
+    UiAOS::CPU::ISR::isr_t static_cb = [](UiAOS::CPU::ISR::registers_t *regs, void* cb_ptr){
         auto pay = (payload_t*)cb_ptr;
         uint8_t scancode = inb(0x60);
         if (scancode > SC_MAX) return; // Over SC_MAX is Release (I think)
@@ -38,7 +38,7 @@ void UiAOS::IO::Keyboard::hook_keyboard(keyboard_callback a, void *b) {
 
     };
 
-    register_interrupt_handler(IRQ1, static_cb, &payload);
+    UiAOS::CPU::ISR::register_interrupt_handler(IRQ1, static_cb, &payload);
 }
 
 char UiAOS::IO::Keyboard::scancode_to_ascii(uint8_t scancode){

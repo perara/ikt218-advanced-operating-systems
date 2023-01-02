@@ -6,6 +6,20 @@
 #define UIAOS_TIMER_H
 #include <stdint.h>
 
-void init_timer(uint32_t freq, isr_t handler, void* context);
+
+
+namespace UiAOS::CPU{
+
+    class PIT{
+
+    public:
+        static void init_timer(uint32_t freq, UiAOS::CPU::ISR::isr_t handler, void* context);
+
+    };
+
+
+}
+
+
 
 #endif //UIAOS_TIMER_H

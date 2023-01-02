@@ -4,12 +4,9 @@
 
 #include "uiastdlib.h"
 #include "driver.h"
+#include <cpu.h>
 
-extern "C" {
-    #include <cpu.h>
-    #include <stdio.h>
-    #include <stdlib.h>
-}
+
 
 
 class OperatingSystem {
@@ -32,12 +29,12 @@ public:
         UiAOS::IO::Monitor::print_new_line();
     }
 
-    void interrupt_handler_3(registers_t regs) {
+    void interrupt_handler_3(UiAOS::CPU::ISR::registers_t regs) {
         UiAOS::IO::Monitor::print_string("Called Interrupt Handler 3!");
         UiAOS::IO::Monitor::print_new_line();
     }
 
-    void interrupt_handler_4(registers_t regs) {
+    void interrupt_handler_4(UiAOS::CPU::ISR::registers_t regs) {
         UiAOS::IO::Monitor::print_string("Called Interrupt Handler 4!");
         UiAOS::IO::Monitor::print_new_line();
     }
@@ -63,13 +60,13 @@ extern "C" void kernel_main()
     os.debug_print("Hello World!");
 
     // Create some interrupt handlers for 3
-    register_interrupt_handler(3,[](registers_t* regs, void* context){
+    UiAOS::CPU::ISR::register_interrupt_handler(3,[](UiAOS::CPU::ISR::registers_t* regs, void* context){
         auto* os = (OperatingSystem*)context;
         os->interrupt_handler_3(*regs);
     }, (void*)&os);
 
     // Create some interrupt handler for 4
-    register_interrupt_handler(4,[](registers_t* regs, void* context){
+    UiAOS::CPU::ISR::register_interrupt_handler(4,[](UiAOS::CPU::ISR::registers_t* regs, void* context){
         auto* os = (OperatingSystem*)context;
         os->interrupt_handler_4(*regs);
     }, (void*)&os);
@@ -87,7 +84,7 @@ extern "C" void kernel_main()
     asm volatile("sti");
 
     // Create a timer on IRQ0 - System Timer
-    init_timer(1, [](registers_t*regs, void* context){
+    UiAOS::CPU::PIT::init_timer(1, [](UiAOS::CPU::ISR::registers_t*regs, void* context){
         auto* os = (OperatingSystem*)context;
         os->timer();
     }, &os);

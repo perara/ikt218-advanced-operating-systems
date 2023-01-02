@@ -5,9 +5,7 @@
 #ifndef UIAOS_KEYBOARD_H
 #define UIAOS_KEYBOARD_H
 
-extern "C"{
-    #include <cpu.h>
-}
+#include <cpu.h>
 
 #define BACKSPACE 0x0E
 #define ENTER 0x1C

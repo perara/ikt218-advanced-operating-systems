@@ -6,17 +6,21 @@
 #include "idt.h"
 
 
-// Lets us access our ASM functions from our C code.
-extern void gdt_flush(uint32_t);
-static void gdt_set_gate(int32_t,uint32_t,uint32_t,uint8_t,uint8_t);
+void init_gdt() asm ("init_gdt");
 
+extern "C" {
+    // Lets us access our ASM functions from our C code.
+    extern void gdt_flush(uint32_t);
+    static void gdt_set_gate(int32_t,uint32_t,uint32_t,uint8_t,uint8_t);
 
-gdt_entry_t gdt_entries[6];
-gdt_ptr_t   gdt_ptr;
+}
+
+UiAOS::CPU::GDT::gdt_entry_t gdt_entries[6];
+UiAOS::CPU::GDT::gdt_ptr_t   gdt_ptr;
 
 void init_gdt()
 {
-    gdt_ptr.limit = (sizeof(gdt_entry_t) * 6) - 1;
+    gdt_ptr.limit = (sizeof(UiAOS::CPU::GDT::gdt_entry_t) * 6) - 1;
     gdt_ptr.base  = (uint32_t)&gdt_entries;
 
     gdt_set_gate(0, 0, 0, 0, 0);                // Null segment
@@ -31,7 +35,7 @@ void init_gdt()
 
 
 // Set the value of one GDT entry.
-static void gdt_set_gate(int32_t num, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran)
+void gdt_set_gate(int32_t num, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran)
 {
     gdt_entries[num].base_low    = (base & 0xFFFF);
     gdt_entries[num].base_middle = (base >> 16) & 0xFF;
