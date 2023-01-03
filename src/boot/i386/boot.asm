@@ -31,6 +31,7 @@ mboot:
 [EXTERN init_gdt]
 [EXTERN init_idt]
 [EXTERN init_isr]
+[EXTERN init_paging]
 start:
     ; Load multiboot information:
     push esp
@@ -45,6 +46,7 @@ start:
 
     ; Initialize the Interrupt Service Routine
     call init_isr
+
 
     ; Execute the kernel:
     cli                         ; Disable interrupts.

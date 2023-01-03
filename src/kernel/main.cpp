@@ -5,8 +5,9 @@
 #include <stdlib/c/libc.h>
 #include "driver.h"
 #include <cpu.h>
-
-
+#include "memory/paging/paging.h"
+// Define entry point in asm to prevent C++ mangling
+void kernel_main() asm ("kernel_main");
 
 
 class OperatingSystem {
@@ -14,7 +15,7 @@ class OperatingSystem {
 
 public:
     OperatingSystem(vga_color color) {
-        UiAOS::IO::Monitor::init_vga(WHITE, RED);
+
 
     }
 
@@ -50,8 +51,12 @@ public:
     }
 };
 
-extern "C" void kernel_main()
+void kernel_main()
 {
+    UiAOS::IO::Monitor::init_vga(WHITE, RED);
+    init_paging();
+
+
     // Create operating system object
     auto os = OperatingSystem(RED);
     os.init();
@@ -100,6 +105,11 @@ extern "C" void kernel_main()
         UiAOS::IO::Monitor::print_string(")");
         UiAOS::IO::Monitor::print_new_line();
     }, &os);
+
+
+    // Here we are accessing an illegal memory space. Should give us page fault!
+    uint32_t *ptr = (uint32_t*)0xA0000000;
+    uint32_t do_page_fault = *ptr;
 
     while(1){}
 

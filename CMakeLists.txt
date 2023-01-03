@@ -44,7 +44,7 @@ endif()
 set (WARNING_FLAGS -Wall -Wextra -Wshadow -Wconversion -Wsign-conversion -Wno-error=unknown-warning)
 set (COMMON_COMPILER_FLAGS -ffreestanding -fstack-protector-all ${WARNING_FLAGS})
 set (C_COMPILER_FLAGS ${COMMON_COMPILER_FLAGS} -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin)
-set (CXX_COMPILER_FLAGS ${COMMON_COMPILER_FLAGS} -fno-exceptions -fno-rtti -fconcepts)
+set (CXX_COMPILER_FLAGS ${COMMON_COMPILER_FLAGS} -ffreestanding -Wall -Wextra -fno-exceptions -fno-rtti) # O2
 
 set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_C_STANDARD 11)
