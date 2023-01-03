@@ -1,10 +1,8 @@
 #include "kmalloc.h"
 
-using namespace UiAOS::Memory;
+using namespace UiAOS::std::Memory;
 
-// end is defined in the linker script. (link.ld)
-extern uint32_t end;
-uint32_t placement_address = (uint32_t)&end;
+
 
 uint32_t kmalloc_internal(uint32_t sz, int align, uint32_t *phys)
 {
@@ -27,22 +25,23 @@ uint32_t kmalloc_internal(uint32_t sz, int align, uint32_t *phys)
     return tmp;
 }
 
-uint32_t kmalloc_a(uint32_t sz)
+uint32_t UiAOS::std::Memory::kmalloc_a(uint32_t sz)
 {
     return kmalloc_internal(sz, 1, 0);
 }
 
-uint32_t kmalloc_p(uint32_t sz, uint32_t *phys)
+uint32_t UiAOS::std::Memory::kmalloc_p(uint32_t sz, uint32_t *phys)
 {
     return kmalloc_internal(sz, 0, phys);
 }
 
-uint32_t kmalloc_ap(uint32_t sz, uint32_t *phys)
+uint32_t UiAOS::std::Memory::kmalloc_ap(uint32_t sz, uint32_t *phys)
 {
     return kmalloc_internal(sz, 1, phys);
 }
 
-uint32_t kmalloc(uint32_t sz)
+uint32_t UiAOS::std::Memory::kmalloc(uint32_t sz)
 {
     return kmalloc_internal(sz, 0, 0);
 }
+
