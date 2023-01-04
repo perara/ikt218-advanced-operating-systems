@@ -12,6 +12,8 @@ set(OS_MODULE_STDLIB_SOURCES
 add_library(${OS_MODULE_STDLIB_NAME} ${OS_MODULE_STDLIB_SOURCES})
 target_include_directories(${OS_MODULE_STDLIB_NAME} PUBLIC
         .
+        libc
+
 )
 target_link_libraries(${OS_MODULE_STDLIB_NAME} PUBLIC
         ${OS_LIBRARIES}

@@ -10,20 +10,11 @@ file(GLOB_RECURSE OS_MODULE_KERNEL_SOURCES
         #src/system/*.cpp
         main.cpp
         #src/system/*.c
+        boot/src/boot.cpp
 )
 set(OS_MODULE_KERNEL_BINARY ${OS_KERNEL_NAME}.bin)
 set(OS_MODULE_KERNEL_LINKER ${CMAKE_SOURCE_DIR}/src/arch/${ARCH_TARGET}/linker.ld)
-set(OS_MODULE_KERNEL_LINK_FLAGS "-T ${OS_MODULE_KERNEL_LINKER} -ffreestanding -nostdlib -lgcc ") # 02
-#set(OS_MODULE_KERNEL_COMPILE_OPTS -m32)
-
-########################################
-###
-### OS Module: lib
-#  The UiA Standard C Library
-#  Contains functions to build the OS.
-###
-########################################
-add_subdirectory(stdlib)
+set(OS_MODULE_KERNEL_LINK_FLAGS "-T ${OS_MODULE_KERNEL_LINKER} ${CXX_LINKER_FLAGS}")
 
 ########################################
 ###
@@ -81,8 +72,10 @@ target_link_libraries(
 set_target_properties(
         ${OS_MODULE_KERNEL_NAME} PROPERTIES
         OUTPUT_NAME ${OS_MODULE_KERNEL_BINARY}
-        LINK_FLAGS ${OS_MODULE_KERNEL_LINK_FLAGS}
+        LINK_FLAGS "${OS_MODULE_KERNEL_LINK_FLAGS}"
 )
+
+
 
 ########################################
 ###

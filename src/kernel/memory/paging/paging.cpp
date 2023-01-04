@@ -1,16 +1,18 @@
 #include "paging.h"
 #include "memory.h"
-#include <stdlib/cpp/kmalloc.h>
-#include "../drivers/monitor/monitor_2.h"
-#include "stdlib/c/libc.h"
-#include "stdlib/cpp/exception.h"
 
+#include "../../drivers/monitor/monitor_2.h"
+
+#include "stdlib/cpp/exception.h"
+#include <boot.h>
 void init_paging()
 {
+
+    //UiAOS::IO::Monitor::print_hex(UiAOS::Boot::multiboot->header_addr);
     // The size of physical memory. For the moment we assume it is 16MB big.
 
     // Construct paging mechanisms.
-    UiAOS::Memory::Paging(0x1000000);
+    UiAOS::Memory::Paging(0x1000000); // TODO maybe set dynamically
 }
 
 UiAOS::Memory::Paging::Paging(uint32_t mem_end_page)
@@ -48,6 +50,8 @@ UiAOS::Memory::Paging::Paging(uint32_t mem_end_page)
 
     // Now, enable paging!
     switch_page_directory(kernel_directory);
+
+    enable_paging();
 }
 
 bool UiAOS::Memory::Paging::set_directory(UiAOS::Memory::PageDirectory *dir) {
@@ -64,13 +68,21 @@ bool UiAOS::Memory::Paging::set_directory(UiAOS::Memory::PageDirectory *dir) {
  * This function takes in a page directory, and switches to that directory using ASM ops.
  * @param dir The Page directory that we wish to switch to.
  */
-void UiAOS::Memory::Paging::switch_page_directory(UiAOS::Memory::PageDirectory *dir) {
-    set_directory(dir);
-    asm volatile("mov %0, %%cr3":: "r"(&current_directory->tables_physical)); // Move page directory to cr3 register
+void UiAOS::Memory::Paging::enable_paging() {
     uint32_t cr0; // Define pointer to cr0
     asm volatile("mov %%cr0, %0": "=r"(cr0)); // Move cr0 register to our cr0 pointer
     cr0 |= 0x80000000; // Enable paging!
     asm volatile("mov %0, %%cr0":: "r"(cr0)); // Update cr0 with our cr0 data pointer
+}
+
+
+/**
+ * This function takes in a page directory, and switches to that directory using ASM ops.
+ * @param dir The Page directory that we wish to switch to.
+ */
+void UiAOS::Memory::Paging::switch_page_directory(UiAOS::Memory::PageDirectory *dir) {
+    set_directory(dir);
+    asm volatile("mov %0, %%cr3":: "r"(&current_directory->tables_physical)); // Move page directory to cr3 register
 }
 
 void UiAOS::Memory::Paging::page_fault(UiAOS::CPU::ISR::registers_t* regs, void*)

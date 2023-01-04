@@ -8,6 +8,13 @@ project(UiAOS LANGUAGES C CXX ASM_NASM)
 
 ########################################
 ###
+### CMAKE Imports
+###
+########################################
+include(FetchContent)
+
+########################################
+###
 ### Configure Operating System
 ###
 ########################################
@@ -38,16 +45,29 @@ endif()
 
 ########################################
 ###
-### Set Compiler Flags
+### Set Compiler and Linker FlagsFlags
 ###
 ########################################
-set (WARNING_FLAGS -Wall -Wextra -Wshadow -Wconversion -Wsign-conversion -Wno-error=unknown-warning)
-set (COMMON_COMPILER_FLAGS -ffreestanding -fstack-protector-all ${WARNING_FLAGS})
-set (C_COMPILER_FLAGS ${COMMON_COMPILER_FLAGS} -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin)
-set (CXX_COMPILER_FLAGS ${COMMON_COMPILER_FLAGS} -ffreestanding -Wall -Wextra -fno-exceptions -fno-rtti) # O2
+set (WARNING_FLAGS -Wall -Wextra -Wshadow -Wconversion -Wsign-conversion)
+set (COMMON_COMPILER_FLAGS -ffreestanding -O2)
+set (C_COMPILER_FLAGS ${COMMON_COMPILER_FLAGS} ${WARNING_FLAGS})
+set (CXX_COMPILER_FLAGS ${COMMON_COMPILER_FLAGS} ${WARNING_FLAGS} -fno-exceptions -fno-rtti)
+set (ASM_COMPILER_FLAGS)
+set (CXX_LINKER_FLAGS  "-nostdlib -ffreestanding")
+set (COMMON_INCLUDE_PATHS /usr/include/)
+
+message("CXX_COMPILER_FLAGS ${CXX_COMPILER_FLAGS}")
+message("C_COMPILER_FLAGS ${C_COMPILER_FLAGS}")
+message("ASM_COMPILER_FLAGS ${ASM_COMPILER_FLAGS}")
+
+
+
+
 
 set (CMAKE_CXX_STANDARD 20)
-set (CMAKE_C_STANDARD 11)
+set (CMAKE_C_STANDARD 99)
+
+
 
 ########################################
 ###
@@ -69,6 +89,16 @@ set(CMAKE_ASM_NASM_COMPILE_OBJECT "<CMAKE_ASM_NASM_COMPILER> <DEFINES> <INCLUDES
 # Build the musl libc
 ########################################
 add_subdirectory(src/sdk/musl)
+
+########################################
+###
+### OS Module: lib
+#  The UiA Standard C Library
+#  Contains functions to build the OS.
+###
+########################################
+add_subdirectory(src/stdlib)
+
 
 ########################################
 ###

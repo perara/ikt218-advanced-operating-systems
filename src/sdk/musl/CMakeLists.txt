@@ -1,5 +1,3 @@
-include(FetchContent)
-
 set(OS_SDK_MODULE_MUSL_NAME ${OS_KERNEL_NAME}-sdk-musl)
 set(OS_SDK_MODULE_MUSL_TARGET sdk-${OS_KERNEL_NAME}-musl)
 

@@ -16,7 +16,7 @@ struct idt_entry_struct
     uint8_t  always0;             // This must always be zero.
     uint8_t  flags;               // More flags. See documentation.
     uint16_t base_hi;             // The upper 16 bits of the address to jump to.
-} __attribute__((packed));
+};
 
 typedef struct idt_entry_struct idt_entry_t;
 

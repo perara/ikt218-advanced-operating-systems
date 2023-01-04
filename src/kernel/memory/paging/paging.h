@@ -8,7 +8,7 @@
 
 #include <stdint.h>
 #include <stdlib/cpp/bitset.h>
-#include "../cpu/include/cpu.h"
+#include "../../cpu/include/cpu.h"
 #include "stdlib/cpp/kmalloc.h"
 
 
@@ -86,8 +86,7 @@ namespace UiAOS::Memory {
         explicit Paging(uint32_t mem_page_end);
 
 
-
-
+        void enable_paging();
     };
 
 
