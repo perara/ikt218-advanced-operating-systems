@@ -3,8 +3,11 @@
 ### The University of Agder Operating System
 ### We will be using C, C++ and Assembler
 ########################################
-cmake_minimum_required(VERSION 3.24)
+set(CMAKE_C_COMPILER_WORKS 1)
+set(CMAKE_CXX_COMPILER_WORKS 1)
+cmake_minimum_required(VERSION 3.22.1)
 project(UiAOS LANGUAGES C CXX ASM_NASM)
+
 
 ########################################
 ###
