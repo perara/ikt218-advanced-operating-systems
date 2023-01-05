@@ -18,6 +18,7 @@ namespace UiAOS::IO::Monitor{
     void print_color_string(char *str, uint8_t fore_color, uint8_t back_color);
     void print_char(char ch);
     void print_int(int num);
+    void print_hex(uint32_t n);
 
     static uint16_t* vga_buffer;
     static uint32_t vga_index;

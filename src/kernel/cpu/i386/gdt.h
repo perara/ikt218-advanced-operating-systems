@@ -19,7 +19,7 @@ namespace UiAOS::CPU::GDT{
             uint8_t  access;              // Access flags, determine what ring this segment can be used in.
             uint8_t  granularity;
             uint8_t  base_high;           // The last 8 bits of the base.
-        } __attribute__((packed));
+        };
 
         typedef struct gdt_entry_struct gdt_entry_t;
 

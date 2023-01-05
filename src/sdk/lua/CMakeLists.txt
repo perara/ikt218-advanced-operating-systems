@@ -19,20 +19,24 @@ file(GLOB LUA_SOURCES ${lua_SOURCE_DIR}/src/*.c)
 #    )
 
 
-add_library(${OS_SDK_MODULE_LUA_NAME}  ${LUA_SOURCES})
+add_library(${OS_SDK_MODULE_LUA_NAME} ${LUA_SOURCES})
 target_link_libraries(${OS_SDK_MODULE_LUA_NAME}
         PRIVATE
-        ${OS_SDK_MODULE_MUSL_NAME}
+        ${OS_LIBRARIES}
+
+
 )
 target_include_directories(
         ${OS_SDK_MODULE_LUA_NAME}
+        PRIVATE
+        ${COMMON_INCLUDE_PATHS}
         PUBLIC
         ${lua_SOURCE_DIR}/src
 )
-#set_target_properties(
-#        ${OS_SDK_MODULE_LUA_NAME} PROPERTIES
-#        LINK_FLAGS " -T ${CMAKE_SOURCE_DIR}/src/arch/i386/linker.ld -ffreestanding -O2 -nostdlib -lgcc"
-#)
+target_compile_options(
+        ${OS_SDK_MODULE_LUA_NAME}
+        PRIVATE ${COMMON_COMPILER_FLAGS}
+)
 
 set(OS_APPLICATIONS ${OS_APPLICATIONS} ${OS_SDK_MODULE_LUA_NAME} PARENT_SCOPE)
 

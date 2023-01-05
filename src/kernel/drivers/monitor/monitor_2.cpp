@@ -27,6 +27,47 @@ uint16_t UiAOS::IO::Monitor::vga_entry(unsigned char ch, uint8_t fore_color, uin
     return ax;
 }
 
+void UiAOS::IO::Monitor::print_hex(uint32_t n)
+{
+    uint32_t tmp;
+
+    UiAOS::IO::Monitor::print_string("0x");
+
+    char noZeroes = 1;
+
+    int i;
+    for (i = 28; i > 0; i -= 4)
+    {
+        tmp = (n >> i) & 0xF;
+        if (tmp == 0 && noZeroes != 0)
+        {
+            continue;
+        }
+
+        if (tmp >= 0xA)
+        {
+            noZeroes = 0;
+            UiAOS::IO::Monitor::print_char(tmp-0xA+'a' );
+        }
+        else
+        {
+            noZeroes = 0;
+            UiAOS::IO::Monitor::print_char( tmp+'0' );
+        }
+    }
+
+    tmp = n & 0xF;
+    if (tmp >= 0xA)
+    {
+        UiAOS::IO::Monitor::print_char(tmp-0xA+'a');
+    }
+    else
+    {
+        UiAOS::IO::Monitor::print_char(tmp+'0');
+    }
+
+}
+
 void UiAOS::IO::Monitor::clear_vga_buffer(uint16_t **buffer, uint8_t fore_color, uint8_t back_color)
 {
     uint32_t i;
