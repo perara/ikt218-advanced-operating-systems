@@ -63,14 +63,8 @@ message("CXX_COMPILER_FLAGS ${CXX_COMPILER_FLAGS}")
 message("C_COMPILER_FLAGS ${C_COMPILER_FLAGS}")
 message("ASM_COMPILER_FLAGS ${ASM_COMPILER_FLAGS}")
 
-
-
-
-
 set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_C_STANDARD 99)
-
-
 
 ########################################
 ###
