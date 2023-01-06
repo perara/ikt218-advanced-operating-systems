@@ -5,7 +5,6 @@ set(OS_MODULE_STDLIB_NAME ${OS_KERNEL_NAME}-module-stdlib)
 set(OS_MODULE_STDLIB_SOURCES
         stdlib/c/libc.cpp
         stdlib/cpp/bitset.cpp
-        stdlib/cpp/kmalloc.cpp
         stdlib/cpp/exception.cpp
 )
 

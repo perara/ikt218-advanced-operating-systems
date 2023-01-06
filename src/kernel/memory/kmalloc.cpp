@@ -42,6 +42,5 @@ uint32_t UiAOS::std::Memory::kmalloc_ap(uint32_t sz, uint32_t *phys)
 
 uint32_t UiAOS::std::Memory::kmalloc(uint32_t sz)
 {
-    return kmalloc_internal(sz, 0, 0);
+    return kmalloc_internal(sz, 0, nullptr);
 }
-

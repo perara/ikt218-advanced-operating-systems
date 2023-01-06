@@ -3,7 +3,11 @@
 //
 #include "bitset.h"
 #include "memory.h"
-#include "kmalloc.h"
+
+namespace UiAOS::std::Memory{
+    extern uint32_t kmalloc(uint32_t);
+}
+
 
 using namespace UiAOS::std;
 

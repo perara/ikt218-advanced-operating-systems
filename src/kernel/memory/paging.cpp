@@ -1,10 +1,10 @@
 #include "paging.h"
 #include "memory.h"
 
-#include "../../drivers/monitor/monitor_2.h"
+#include "../drivers/monitor/monitor_2.h"
 
 #include "stdlib/cpp/exception.h"
-#include <boot.h>
+#include "boot.h"
 void init_paging()
 {
 

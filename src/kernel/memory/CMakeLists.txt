@@ -2,7 +2,8 @@
 
 set(OS_MODULE_MEMORY_NAME ${OS_KERNEL_NAME}-memory)
 set(OS_MODULE_MEMORY_SOURCES
-        paging/paging.cpp
+        paging.cpp
+        kmalloc.cpp
 
 )
 

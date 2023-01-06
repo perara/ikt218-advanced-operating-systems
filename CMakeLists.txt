@@ -9,11 +9,16 @@ cmake_minimum_required(VERSION 3.22.1)
 project(UiAOS LANGUAGES C CXX ASM_NASM)
 
 
+# Lock this section so that parallel CMake runs won't clash on checkout in the same directory
+file(LOCK ${CMAKE_SOURCE_DIR} DIRECTORY GUARD FILE)
+
+
 ########################################
 ###
 ### CMAKE Imports
 ###
 ########################################
+cmake_policy(SET CMP0135 NEW)
 include(FetchContent)
 
 ########################################
@@ -34,8 +39,17 @@ set(OS_LIBRARIES)
 # We are using cross-compilation to ensure that the binary are compatible on other computers
 # Arch: yay -S i386-elf-gcc
 ########################################
-find_program(gcc-path ${ARCH_TARGET}-elf-gcc)
-find_program(g++-path ${ARCH_TARGET}-elf-g++)
+set(gcc-path ${CMAKE_CURRENT_SOURCE_DIR}/musl-compiler/bin/${ARCH_TARGET}-linux-musl-gcc)
+set(g++-path ${CMAKE_CURRENT_SOURCE_DIR}/musl-compiler/bin/${ARCH_TARGET}-linux-musl-g++)
+if(NOT gcc-path)
+    message("Could not find musl-gcc. Compiling might take a while!")
+    execute_process(
+            COMMAND bash -c "sh build-cross-compiler.sh"
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/config
+
+    )
+    message(FATAL_ERROR "Please rerun configuration!")
+endif()
 
 if(NOT ${gcc-path} STREQUAL ${CMAKE_C_COMPILER})
     message("Requires ${gcc-path} as compiler, but CMAKE_C_COMPILER=${CMAKE_C_COMPILER}")

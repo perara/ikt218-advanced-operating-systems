@@ -5,7 +5,7 @@
 #include <stdlib/c/libc.h>
 #include "driver.h"
 #include <cpu.h>
-#include "memory/paging/paging.h"
+#include "memory/paging.h"
 #include "boot.h"
 
 // Define entry point in asm to prevent C++ mangling

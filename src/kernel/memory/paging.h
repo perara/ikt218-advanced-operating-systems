@@ -6,10 +6,10 @@
 #define UIAOS_PAGING_H
 
 
-#include <stdint.h>
-#include <stdlib/cpp/bitset.h>
-#include "../../cpu/include/cpu.h"
-#include "stdlib/cpp/kmalloc.h"
+#include "stdint.h"
+#include "stdlib/cpp/bitset.h"
+#include "cpu.h"
+#include "kmalloc.h"
 
 
 
