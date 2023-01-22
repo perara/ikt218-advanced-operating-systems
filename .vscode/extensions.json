@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "ms-vscode.cmake-tools",
+        "webfreak.debug",
+        "twxs.cmake"
+    ]
+}

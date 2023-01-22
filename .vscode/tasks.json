@@ -1,0 +1,17 @@
+{
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "(Debug) Build the kernel and run qemu",
+      "command": "bash",
+      "args": [
+        "${workspaceRoot}/build/QEMURunner.sh",
+        "-d"
+      ],
+      "options": {
+       "cwd": "${workspaceRoot}",
+      }
+    }
+  ],
+  "version": "2.0.0"
+}

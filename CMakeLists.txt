@@ -12,13 +12,12 @@ project(UiAOS LANGUAGES C CXX ASM_NASM)
 # Lock this section so that parallel CMake runs won't clash on checkout in the same directory
 file(LOCK ${CMAKE_SOURCE_DIR} DIRECTORY GUARD FILE)
 
-
 ########################################
 ###
 ### CMAKE Imports
 ###
 ########################################
-cmake_policy(SET CMP0135 NEW)
+#cmake_policy(SET CMP0135 NEW)
 include(FetchContent)
 
 ########################################
@@ -38,27 +37,8 @@ set(OS_LIBRARIES)
 ### Compiler path configuration
 # We are using cross-compilation to ensure that the binary are compatible on other computers
 # Arch: yay -S i386-elf-gcc
+# Ubuntu: sudo apt -y install build-essential binutils gcc-multilib
 ########################################
-set(gcc-path ${CMAKE_CURRENT_SOURCE_DIR}/musl-compiler/bin/${ARCH_TARGET}-linux-musl-gcc)
-set(g++-path ${CMAKE_CURRENT_SOURCE_DIR}/musl-compiler/bin/${ARCH_TARGET}-linux-musl-g++)
-if(NOT gcc-path)
-    message("Could not find musl-gcc. Compiling might take a while!")
-    execute_process(
-            COMMAND bash -c "sh build-cross-compiler.sh"
-            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/config
-
-    )
-    message(FATAL_ERROR "Please rerun configuration!")
-endif()
-
-if(NOT ${gcc-path} STREQUAL ${CMAKE_C_COMPILER})
-    message("Requires ${gcc-path} as compiler, but CMAKE_C_COMPILER=${CMAKE_C_COMPILER}")
-    set(CMAKE_C_COMPILER   ${gcc-path})
-endif()
-if(NOT ${g++-path} STREQUAL ${CMAKE_CXX_COMPILER})
-    message("Requires ${gcc-path} as compiler, but CMAKE_C_COMPILER=${CMAKE_CXX_COMPILER}")
-    set(CMAKE_CXX_COMPILER ${g++-path})
-endif()
 
 ########################################
 ###
@@ -66,7 +46,7 @@ endif()
 ###
 ########################################
 set (WARNING_FLAGS -Wall -Wextra -Wshadow -Wconversion -Wsign-conversion)
-set (COMMON_COMPILER_FLAGS -ffreestanding -O2)
+set (COMMON_COMPILER_FLAGS -ffreestanding -O2 -m32)
 set (C_COMPILER_FLAGS ${COMMON_COMPILER_FLAGS} ${WARNING_FLAGS})
 set (CXX_COMPILER_FLAGS ${COMMON_COMPILER_FLAGS} ${WARNING_FLAGS} -fno-exceptions -fno-rtti)
 set (ASM_COMPILER_FLAGS)
